@@ -1,0 +1,39 @@
+{% extends 'catering/view_food.html' %}
+{%block content%}
+    <title>Edit Food</title>
+<div class="container col-md-4 mx-auto p-3 mb-5 mt-5" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; border-radius: 10px;">
+    <h1 class="text-warning text-center">Edit Food Item</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name" class="fs-4 fw-bold">Food Name</label>
+                    <input value="{{ food_item.name }}" type="text" name="name" class="form-control m-3">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="quantity_available"  class="fs-4 fw-bold m-3">Quantity Available</label>
+                <input value="{{ food_item.quantity_available }}" type="number" name="quantity_available" class="form-control m-2" style="width: 290px;">
+            </div>
+            <div class="form-group">
+                <label for="catering_name"  class="fs-4 fw-bold m-3">Catering Name</label>
+                <input value="{{ food_item.catering_name }}" type="text" name="catering_name" class="form-control m-2" style="width: 290px;">
+            </div>
+        </div>
+        
+       
+        
+        <div class="form-group">
+            <label for="image"  class="fs-4 fw-bold">Food Image</label>
+            {% if food_item.image %}
+                <img src="{{ food_item.image.url }}" alt="{{ food_item.name }}" class="img-fluid mb-3 m-5" style="height: 200px; width: 200px;">
+            {% endif %}
+            <input accept="image/*" type="file" name="image" class="form-control-file">
+        </div><br>
+        
+        <button type="submit" class="btn btn-primary rounded-pill">Update Food</button>
+    </form>
+    
+</div>    
+{%endblock%}

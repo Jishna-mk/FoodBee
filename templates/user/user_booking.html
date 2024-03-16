@@ -1,0 +1,35 @@
+{%extends "index.html"%}
+{%load static%}
+{% block content %}
+<div class="container mt-5">
+  <h1 class="text-center">Book Item</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-3" style="width: 300px;">
+        <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}"
+          style="height: 200px; width: 300px;">
+        <div class="card-body">
+          <h3 class="card-title">{{ food_item.name }}</h3>
+          <p class="card-text">Quantity Available:
+            {% if food_item.quantity_available > 0 %}
+            {{ food_item.quantity_available }}
+            {% else %}
+            <span class="text-danger">0</span>
+            {% endif %}
+          </p>
+          {% if food_item.quantity_available == 0 %}
+          <p class="text-danger">Quantity is not available now</p>
+          {% endif %}
+
+          <form method="post" action="{% url 'book_item' food_item.food_id %}">
+            {% csrf_token %}
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" required>
+            <button type="submit" class="btn btn-success">Book</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

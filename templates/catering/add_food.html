@@ -1,0 +1,15 @@
+{% extends 'catering/view_food.html' %}
+{% block content %}
+<div class="container  mx-auto mt-5  " style="height: 80vh; margin-top: 50px; border: 1px soild rgb(214, 152, 72);">
+    
+    <div class="col-md-6 mx-auto p-5 border border-dark p-5 rounded-4 border-0 shadow-lg" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; border-radius: 10px;">
+        <h2 class="text-warning">Add Food</h2>
+<form method="post" enctype="multipart/form-data" class="fs-4 fw-bold">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary rounded-pill">Add Food</button>
+</form>
+</div>
+</div>
+
+{% endblock %}

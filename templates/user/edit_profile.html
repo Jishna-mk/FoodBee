@@ -1,0 +1,14 @@
+{% extends "user/viewpage.html" %}
+{% load static %}
+
+
+{% block content %}
+<h3 class="text-center">Edit Profile</h3>
+<div class="container col-md-6 mx-auto p-5" style="border-radius: 10px ; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-warning">Save Changes</button>
+</form>
+</div>
+{%endblock%}

@@ -1,0 +1,21 @@
+{% extends "user/viewpage.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="text-center">Booking Error</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}">
+          <div class="card-body">
+            <h3 class="card-title">{{ food_item.name }}</h3>
+            <p class="card-text">Quantity Available: {{ food_item.quantity_available }}</p>
+            <p class="card-text text-danger">Sorry, the requested quantity is not available.</p>
+            <a href="{% url 'food_list' %}" class="btn btn-warning">Go Back to View Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

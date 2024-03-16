@@ -1,0 +1,102 @@
+{% extends "index.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+    .form-control{
+        height: 50px;
+        margin-top: 30px;
+        font-size: 20px;
+    }
+    .reg_btn {
+        background-color: black;
+        color: rgb(248, 175, 40);
+        border-radius: 5px;
+        margin-top: 15px;
+        height: 50px;
+        width: 270px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .reg_btn:hover {
+        background-color: rgb(248, 175, 40);
+        color: black;
+    }
+
+    .log_btn {
+        text-align: center;
+        /* margin-left: 80px;  */
+        color: rgb(71, 71, 71);
+    }
+
+    .log_btn:hover {
+        color: rgb(238, 174, 12);
+    }
+</style>
+</style>
+
+
+
+
+<!-- {% for message in messages %}
+<div class="alert alert-danger alert-dismissible fade show" style="position: fixed; z-index: 90; right: 10px; top: 10px"
+    role="alert">
+    <strong>{{ message }} !!!</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %} -->
+
+{% for message in messages %}
+<div class="alert alert-dark" role="alert" id="alertBox">
+    <h6>{{ message.message }}</h6>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+</div>
+{% endfor %}
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Error:</strong>
+    {{ form.errors }}
+</div>
+{% endif %}
+<main id="main">
+    <section id="contact" class="contact" style="border: 5px;">
+        <div class="signup-container" data-aos="fade-up" style="width: 800px; margin: auto;  height: 1000px;">
+            <div class="section-header">
+                <h3 class="text-center text-dark">Register As Catering</h3>
+            </div>
+            <form method="post" class="php-email-form border border-dark p-5 rounded-4 border-0 shadow-lg" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group row ">
+                    <label style="text-align: center; margin-top: 30px; font-size: 20px;"for="{{ field.id }}" class="col-md-3 col-form-label">{{ field.label }}</label>
+                    <div class="col-md-9" style="font-size: 20px;">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h3 class="mt-4 text-muted">Your Profile Details</h3>
+                <div class="row">
+                    {% for fields in catering_form %}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label style="text-align: center; margin-top: 30px; font-size: 20px;" for="{{ fields.id }}">{{ fields.label }}</label>
+                            {{ fields }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-warning btn-block border-0 py-2 rounded-pill">Register As a Catering</button>
+                </div>
+                <h5 class="log_btn text-end mt-4 " style="color: rgb(11, 12, 10); text-align: center; margin-right: 260px;"><a
+                        href="{% url 'cateringsignin' %}" class="text-muted">Sign in As Catering</a></h5>
+            </form>
+        </div>
+    </section>
+</main>
+{%endblock%}

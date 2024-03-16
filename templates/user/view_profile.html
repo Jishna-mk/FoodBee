@@ -1,0 +1,19 @@
+{% extends "user/viewpage.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container col-md-4 p-5 mx-auto justify-content-center align-items-center py-5 my-5 mt-5 mb-5" style="height: 400px; box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px; border-radius: 20px;">
+    <h1 class="text-center">User Details</h1>
+  <p><strong>First Name:</strong> {{ user_profile.first_name }}</p>
+  <p><strong>Last Name:</strong> {{ user_profile.last_name }}</p>
+  <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+  <p><strong>Email:</strong> {{ user_profile.user.email }}</p>
+  <p><strong>Phone Number:</strong> {{ user_profile.phone_number }}</p>
+  <p><strong>Address:</strong> {{ user_profile.address }}</p>
+
+ 
+<!-- viewpage.html -->
+<a href="{% url 'edit_profile' user_profile.user.id %}" class="btn btn-warning">Edit Profile</a>
+
+</div>
+{% endblock %}
