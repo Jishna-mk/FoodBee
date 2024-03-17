@@ -144,3 +144,26 @@ def book_item(request, food_id):
             return render(request, 'user/booking_error.html', {'food_item': food_item})
 
     return render(request, 'user/book_food.html', {'food_item': food_item})
+
+@login_required
+def user_bookings(request):
+    # Retrieve all booked items for the current user
+    booked_items = FoodItem.objects.filter(booked_by=request.user)
+
+
+
+    context = {
+        'booked_items': booked_items,
+    }
+    return render(request, 'user/user_bookings.html', context)
+
+def delete_booking(request, food_id):
+    
+    food_item = get_object_or_404(FoodItem, pk=food_id)
+ 
+    if food_item.booked_by == request.user:
+      
+        food_item.booked_by = None
+        food_item.save()
+
+    return redirect('user_bookings')

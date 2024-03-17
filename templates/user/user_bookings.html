@@ -1,0 +1,49 @@
+{% extends "user/viewpage.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <h2>Your Booked Items</h2>
+  {% if booked_items %}
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Food Item Name</th>
+            
+            <th>Quantity Booked</th>
+            
+            <th>View Provider</th>
+            <th>Status</th>
+           
+            <th>cancel</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in booked_items %}
+            <tr>
+              <td>{{ item.name }}</td>
+             
+              <td>{{ item.quantity_booked }}</td>
+              <td></td>
+              <td></td>
+             
+              <td>
+                <a href="{% url 'delete_booking' item.food_id %}" class="btn btn-danger">Cancel Booking</a>
+            </td>
+              
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="text-muted">You haven't booked any items yet.</p>
+  {% endif %}
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+{% endblock %}
