@@ -1,0 +1,57 @@
+{% extends 'catering/view_food.html' %}
+{%load static%}
+{%block content%}
+<h2 class="text-center"> Booking Details</h2>
+<div class="container mt-5 mb-5">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Food Item Name</th>
+           
+            <th>Quantity Booked</th>
+           
+            <th>Booked By</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Status</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          {% for detail in booking_details %}
+            <tr>
+              <td>{{ detail.food_item_name }}</td>
+              
+              <td>{{ detail.quantity_booked }}</td>
+           
+              <td>{{ detail.booked_by_username }}</td>
+              <td>{{ detail.booked_by_first_name }}</td>
+              <td>{{ detail.booked_by_last_name }}</td>
+              <td>{{ detail.address }}</td>
+              <td>{{ detail.phone_number }}</td>
+              <td> 
+                <form action="{% url 'approve_booking' food_id=detail.food_id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn {% if detail.status == 'approved' %}btn-success{% else %}btn-primary{% endif %}">
+                        {% if detail.status == 'approved' %}Approved{% else %}Approve{% endif %}
+                    </button>
+                    
+                </form>
+                
+                
+                
+             </td>
+            
+              
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+
+{%endblock%}

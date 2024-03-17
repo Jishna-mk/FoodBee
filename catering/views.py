@@ -4,6 +4,7 @@ from .models import FoodItem,CateringProfile
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.shortcuts import render, redirect, get_object_or_404
+from users.models import UserProfile,Feedback
 
 # Create your views here.
 def food_view(request):
@@ -167,3 +168,42 @@ def delete_booking(request, food_id):
         food_item.save()
 
     return redirect('user_bookings')
+
+
+def approve_booking(request, food_id):
+    food_item = get_object_or_404(FoodItem, pk=food_id)
+    food_item.status = 'approved'
+    food_item.save()
+    print("Status Updated to:", food_item.status)  # Check if the status is updated correctly
+    messages.success(request, "Successfully Approved")
+    return redirect('staff_bookings')
+
+
+def feedback(request):
+    feedbacks = Feedback.objects.all().order_by('-time')
+    return render(request, 'catering/feedback.html', {'feedbacks': feedbacks})
+
+def staff_bookings(request):
+    # Retrieve all booked items with user details
+    booked_items = FoodItem.objects.filter(booked_by__isnull=False)
+    booking_details = []
+
+    for food_item in booked_items:
+       
+        user_profile = UserProfile.objects.get(user=food_item.booked_by)
+        booking_details.append({
+            'food_item_name': food_item.name,
+            
+            'quantity_booked': food_item.quantity_booked,
+
+            'booked_by_username': food_item.booked_by.username,
+            'booked_by_first_name': user_profile.first_name,
+            'booked_by_last_name': user_profile.last_name,
+            'address': user_profile.address,
+            'phone_number': user_profile.phone_number,
+            'booked_by_email': food_item.booked_by.email,
+            'food_id': food_item.pk,
+        })
+
+    context = {'booking_details': booking_details}
+    return render(request, 'catering/bookings.html', context)

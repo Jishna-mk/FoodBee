@@ -14,7 +14,7 @@
             
             <th>Quantity Booked</th>
             
-            <th>View Provider</th>
+            <th>View Providers</th>
             <th>Status</th>
            
             <th>cancel</th>
@@ -26,8 +26,18 @@
               <td>{{ item.name }}</td>
              
               <td>{{ item.quantity_booked }}</td>
-              <td></td>
-              <td></td>
+              <td>
+                <a href="{% url 'sponsors_page' %}" class="btn btn-warning">View Sponsors</a>
+
+              </td>
+             
+                <td>
+
+                        {{ item.status }}
+                    
+                </td>
+                
+              
              
               <td>
                 <a href="{% url 'delete_booking' item.food_id %}" class="btn btn-danger">Cancel Booking</a>

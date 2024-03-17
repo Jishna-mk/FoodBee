@@ -1,0 +1,67 @@
+{% extends "user/viewpage.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+  .container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .form-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .btn-primary {
+   
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  
+
+  .error-message {
+    color: #dc3545;
+    font-size: 12px;
+  }
+</style>
+
+<div class="container">
+  <div class="form-container">
+    <form method="post" class="mt-4">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_content" class="form-label">Content:</label>
+        {{ form.content }}
+        {% if form.content.errors %}
+          <small class="error-message">{{ form.content.errors }}</small>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-warning">Submit Feedback</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -13,6 +13,9 @@ urlpatterns=[
     path('book_item/<int:food_id>/', views.book_item, name='book_item'),
     path('delete_booking/<int:food_id>/', views.delete_booking, name='delete_booking'),
     path('user_bookings/',views.user_bookings,name='user_bookings'),
+    path('feedback/',views.feedback,name="feedback"),
+    path('staff_bookings/',views.staff_bookings,name="staff_bookings"),
+    path('approve_booking/<int:food_id>/', views.approve_booking, name='approve_booking'),
   
    
 ]

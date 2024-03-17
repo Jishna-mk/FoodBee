@@ -6,8 +6,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth import login
 from catering.models import FoodItem
 from catering.models import CateringProfile
-from .models import UserProfile
-from .forms import UserProfileForm
+from .models import UserProfile,Feedback
+from .forms import UserProfileForm,FeedbackForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
@@ -91,4 +91,26 @@ def edit_profile(request, user_id):
 
     return render(request, 'user/edit_profile.html', {'form': form})
 
+from .models import CateringProfile
 
+def view_sponsors(request):
+    # Retrieve all catering profiles
+    profiles = CateringProfile.objects.all().order_by("-id")
+    
+    return render(request, 'user/sponsors.html', {'profiles': profiles})
+
+def submit_feedback(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.user = request.user
+            feedback.save()
+            return redirect('view_feedbacks')
+    else:
+        form = FeedbackForm()
+    return render(request, 'user/submit_feedback.html', {'form': form})
+
+def view_feedbacks(request):
+    feedbacks = Feedback.objects.all().order_by('-time')
+    return render(request, 'user/view_feedbacks.html', {'feedbacks': feedbacks})

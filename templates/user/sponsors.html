@@ -1,0 +1,23 @@
+{% extends "user/viewpage.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h3 class="mt-5 mb-4">All Catering Profiles choose your sponsers location</h3>
+    <div class="row">
+        {% for profile in profiles %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ profile.Catering_Name }}</h5>
+                        <p class="card-text">Phone Number: {{ profile.Phone_Number }}</p>
+                        <p class="card-text">Address: {{ profile.Address }}</p>
+                        <p class="card-text">Designation: {{ profile.Designation }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>    
+{% endblock %}

@@ -4,7 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 import re
 from django.forms import TextInput,ModelForm,DateInput
-from .models import UserProfile
+from .models import UserProfile,Feedback
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -26,6 +26,11 @@ class UserAddForm(UserCreationForm):
         self.fields["password1"].widget.attrs.update({"class": "form-control"})
         self.fields["password2"].widget.attrs.update({"class": "form-control"})
 
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['content']
 
 
 
