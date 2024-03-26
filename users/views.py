@@ -13,10 +13,20 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request,"index.html")
 
+# def food_list(request):
+#     food_items = FoodItem.objects.all()
+#     return render(request, 'user/viewpage.html', {'food_items': food_items})
 def food_list(request):
+    if request.method == 'POST':
+        food_id = request.POST.get('food_id')
+        quantity = int(request.POST.get('quantity'))
+        food_item = get_object_or_404(FoodItem, pk=food_id)
+        if food_item.book_item(quantity, request.user):
+            # Booking successful, redirect to food_list
+            return redirect('food_list')
+
     food_items = FoodItem.objects.all()
     return render(request, 'user/viewpage.html', {'food_items': food_items})
-
 
 def register(request):
     if request.method == "POST":

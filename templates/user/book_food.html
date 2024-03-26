@@ -22,7 +22,12 @@
           {% if food_item.quantity_available == 0 %}
             <p class="text-danger">Quantity is not available now</p>
           {% endif %}
-
+           
+          {% for message in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
           <form method="post" action="{% url 'book_item' food_item.food_id %}">
             {% csrf_token %}
             <label for="quantity">Quantity:</label>

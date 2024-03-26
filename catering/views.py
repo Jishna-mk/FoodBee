@@ -127,6 +127,25 @@ def delete_food(request,pk):
     food.delete()
     messages.info(request,"item deleted")
     return redirect("food_view")
+# def book_item(request, food_id):
+#     food_item = get_object_or_404(FoodItem, pk=food_id)
+    
+#     # Check if user has a profile
+#     if not hasattr(request.user, 'profile'):
+#         # Redirect to create profile page
+#         return redirect('create_profile')
+
+#     if request.method == 'POST':
+#         quantity = int(request.POST.get('quantity', 0))
+#         if food_item.book_item(quantity, request.user):
+#             # Booking successful, you can proceed with your logic here
+#             return render(request, 'user/booking_success.html', {'food_item': food_item, 'quantity': quantity})
+#         else:
+#             # Quantity not available, handle accordingly (e.g., show an error message)
+#             return render(request, 'user/booking_error.html', {'food_item': food_item})
+
+#     return render(request, 'user/book_food.html', {'food_item': food_item})
+
 def book_item(request, food_id):
     food_item = get_object_or_404(FoodItem, pk=food_id)
     
@@ -137,6 +156,11 @@ def book_item(request, food_id):
 
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 0))
+        if quantity > food_item.quantity_available:
+            # Quantity entered exceeds available quantity, show error message
+            messages.error(request, "Quantity entered exceeds available quantity")
+            return redirect('book_item', food_id=food_item.pk)
+
         if food_item.book_item(quantity, request.user):
             # Booking successful, you can proceed with your logic here
             return render(request, 'user/booking_success.html', {'food_item': food_item, 'quantity': quantity})
@@ -145,7 +169,6 @@ def book_item(request, food_id):
             return render(request, 'user/booking_error.html', {'food_item': food_item})
 
     return render(request, 'user/book_food.html', {'food_item': food_item})
-
 @login_required
 def user_bookings(request):
     # Retrieve all booked items for the current user
